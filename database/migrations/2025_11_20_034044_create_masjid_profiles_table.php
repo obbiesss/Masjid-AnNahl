@@ -32,7 +32,7 @@ return new class extends Migration
             // CONTACT
             $table->string('whatsapp')->nullable();
 
-            // ✅ FIELD BARU - LOKASI & FASILITAS
+            // LOKASI & FASILITAS
             $table->text('address')->nullable();
             $table->text('maps_embed')->nullable();
             $table->json('facilities')->nullable();

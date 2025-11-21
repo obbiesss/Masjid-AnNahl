@@ -42,9 +42,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('profile/edit', [MasjidProfileAdminController::class, 'edit'])->name('profile.edit');
     Route::post('profile/update', [MasjidProfileAdminController::class, 'update'])->name('profile.update');
 
-    // ✅ PENGURUS - DIPINDAH dari web.php
+    // PENGURUS
     Route::resource('pengurus', PengurusController::class);
 
-    // ✅ SCHEDULES - DIPINDAH dari web.php  
+    // SCHEDULES
     Route::resource('schedules', ScheduleAdminController::class)->except(['show']);
 });
