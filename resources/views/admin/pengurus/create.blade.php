@@ -1,49 +1,135 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Tambah Pengurus')
+
 @section('content')
-<div class="container py-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Tambah Pengurus</h2>
+    <a href="{{ route('admin.pengurus.index') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+</div>
 
-    <h2 class="fw-bold mb-4">Tambah Pengurus</h2>
-
-    <div class="card shadow-sm">
-        <div class="card-body">
-
-            <form action="{{ route('admin.pengurus.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                <div class="mb-3">
-                    <label class="form-label">Nama*</label>
-                    <input type="text" name="nama" class="form-control" required>
+<div class="card">
+    <div class="card-body">
+        <form action="{{ route('admin.pengurus.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                        <input type="text" 
+                               class="form-control @error('nama') is-invalid @enderror" 
+                               id="nama" 
+                               name="nama" 
+                               value="{{ old('nama') }}"
+                               placeholder="Contoh: Ahmad Fauzi"
+                               required>
+                        @error('nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Jabatan / Tugas*</label>
-                    <input type="text" name="jabatan" class="form-control" required>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="jabatan" class="form-label">Jabatan <span class="text-danger">*</span></label>
+                        <input type="text" 
+                               class="form-control @error('jabatan') is-invalid @enderror" 
+                               id="jabatan" 
+                               name="jabatan" 
+                               value="{{ old('jabatan') }}"
+                               placeholder="Contoh: Ketua DKM"
+                               required>
+                        @error('jabatan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Kontak (Opsional)</label>
-                    <input type="text" name="kontak" class="form-control">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="kontak" class="form-label">Nomor WhatsApp</label>
+                        <input type="text" 
+                               class="form-control @error('kontak') is-invalid @enderror" 
+                               id="kontak" 
+                               name="kontak" 
+                               value="{{ old('kontak') }}"
+                               placeholder="Contoh: 6281234567890">
+                        @error('kontak')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="text-muted">Masukkan nomor tanpa tanda + atau spasi</small>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Urutan Tampil</label>
-                    <input type="number" name="urutan" class="form-control" value="0">
-                    <small class="text-muted">Semakin kecil, semakin atas.</small>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="urutan" class="form-label">Urutan Tampil</label>
+                        <input type="number" 
+                               class="form-control @error('urutan') is-invalid @enderror" 
+                               id="urutan" 
+                               name="urutan" 
+                               value="{{ old('urutan', 0) }}"
+                               placeholder="0">
+                        @error('urutan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="text-muted">Semakin kecil angka, semakin atas posisinya</small>
+                    </div>
                 </div>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Foto (Opsional)</label>
-                    <input type="file" name="foto" class="form-control">
+            <div class="mb-3">
+                <label for="foto" class="form-label">Foto Profil</label>
+                <input type="file" 
+                       class="form-control @error('foto') is-invalid @enderror" 
+                       id="foto" 
+                       name="foto"
+                       accept="image/*"
+                       onchange="previewImage(event)">
+                @error('foto')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                <small class="text-muted">Format: JPG, PNG, JPEG. Rekomendasi: foto persegi 1:1</small>
+                
+                <!-- Image Preview -->
+                <div class="mt-3" id="imagePreview" style="display: none;">
+                    <p class="small text-muted mb-2">Preview:</p>
+                    <img id="preview" src="" alt="Preview" class="img-thumbnail rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
                 </div>
+            </div>
 
-                <button class="btn btn-primary">Simpan</button>
-                <a href="{{ route('admin.pengurus.index') }}" class="btn btn-secondary">Batal</a>
+            <hr>
 
-            </form>
-
-        </div>
+            <div class="d-flex justify-content-end gap-2">
+                <a href="{{ route('admin.pengurus.index') }}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Batal
+                </a>
+                <button type="submit" class="btn btn-warning">
+                    <i class="bi bi-save"></i> Simpan
+                </button>
+            </div>
+        </form>
     </div>
-
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function previewImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('preview').src = e.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+@endpush

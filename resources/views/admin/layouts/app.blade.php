@@ -179,7 +179,7 @@
                         
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" 
-                            href="{{ route('admin.profile.edit') }}">
+                            href="{{ route('admin.profile.index') }}">
                                 <i class="bi bi-building me-2"></i>
                                 Profil Masjid
                             </a>

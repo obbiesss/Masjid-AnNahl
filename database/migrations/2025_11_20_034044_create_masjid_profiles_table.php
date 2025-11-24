@@ -35,6 +35,8 @@ return new class extends Migration
             // LOKASI & FASILITAS
             $table->text('address')->nullable();
             $table->text('maps_embed')->nullable();
+            $table->text('operating_hours')->nullable();
+            $table->string('maps_url')->nullable();
             $table->json('facilities')->nullable();
 
             $table->timestamps();

@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class MasjidProfileAdminController extends Controller
 {
+    public function index()
+    {
+        $profile = MasjidProfile::first();
+        
+        return view('admin.profile.index', compact('profile'));
+    }
+
     public function edit()
     {
         $profile = MasjidProfile::first();
@@ -26,6 +33,27 @@ class MasjidProfileAdminController extends Controller
         if (!$profile) {
             $profile = new MasjidProfile();
         }
+
+        // Validasi
+        $request->validate([
+            'about_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'about_text_1' => 'required|string',
+            'about_text_2' => 'nullable|string',
+            'visi' => 'required|string',
+            'misi' => 'required|string',
+            'capacity' => 'required|integer',
+            'year' => 'required|integer',
+            'routine_activities' => 'required|string',
+            'public_info' => 'required|string',
+            'whatsapp' => 'required|string',
+            'address' => 'required|string',
+            'maps_embed' => 'required|string',
+            'operating_hours' => 'required|string',
+            'maps_url' => 'required|url',
+            'facility_name.*' => 'sometimes|required|string',
+            'facility_icon.*' => 'sometimes|required|string',
+            'facility_description.*' => 'sometimes|required|string',
+        ]);
 
         // Upload image
         if ($request->hasFile('about_image')) {
@@ -46,7 +74,10 @@ class MasjidProfileAdminController extends Controller
         // LOKASI & MAPS
         $profile->address             = $request->address;
         $profile->maps_embed          = $request->maps_embed;
+        $profile->operating_hours     = $request->operating_hours;
+        $profile->maps_url            = $request->maps_url; 
         
+        // FASILITAS
         $facilities = [];
         if ($request->facility_name) {
             foreach ($request->facility_name as $index => $name) {
@@ -63,6 +94,6 @@ class MasjidProfileAdminController extends Controller
 
         $profile->save();
 
-        return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
+        return redirect()->route('admin.profile.index')->with('success', 'Profil berhasil diperbarui!');
     }
 }

@@ -127,14 +127,14 @@
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="card card-custom h-100 text-center">
                         <div class="card-body p-3">
-                            <!-- Foto -->
-                            <div class="mb-3">
-                                <img src="{{ $pengurusItem->foto ? asset('storage/' . $pengurusItem->foto) : 'https://placehold.co/150x150/667eea/ffffff?text=' . urlencode(substr($pengurusItem->nama, 0, 1)) }}" 
-                                     class="rounded-circle shadow-sm" 
-                                     width="80" height="80" 
-                                     style="object-fit: cover;"
-                                     alt="{{ $pengurusItem->nama }}"
-                                     onerror="this.src='https://placehold.co/150x150/667eea/ffffff?text=' + encodeURIComponent('{{ substr($pengurusItem->nama, 0, 1) }}')">
+                            <!-- Foto - PERBAIKAN DI SINI -->
+                            <div class="mb-3 d-flex justify-content-center">
+                                <div class="profile-image-container">
+                                    <img src="{{ $pengurusItem->foto ? asset('storage/' . $pengurusItem->foto) : 'https://placehold.co/150x150/667eea/ffffff?text=' . urlencode(substr($pengurusItem->nama, 0, 1)) }}" 
+                                         class="profile-image rounded-circle shadow-sm" 
+                                         alt="{{ $pengurusItem->nama }}"
+                                         onerror="this.src='https://placehold.co/150x150/667eea/ffffff?text=' + encodeURIComponent('{{ substr($pengurusItem->nama, 0, 1) }}')">
+                                </div>
                             </div>
                             
                             <!-- Nama & Jabatan -->
@@ -172,6 +172,31 @@
         </div>
     </div>
 </section>
+
+<style>
+/* foto pengurus */
+.profile-image-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Force rounded-circle */
+.rounded-circle {
+    border-radius: 50% !important;
+}
+</style>
 
 <!-- Statistik Section -->
 <section class="section-padding bg-light">
@@ -279,6 +304,7 @@
         </div>
 
         <div class="row align-items-stretch">
+            <!-- Info Lokasi -->
             <div class="col-lg-5 mb-4">
                 <div class="card card-custom h-100">
                     <div class="card-body p-4 d-flex flex-column">
@@ -300,13 +326,15 @@
                                 <strong>Jam Operasional</strong>
                             </p>
                             <p class="text-muted mb-0">
-                                Buka 24 Jam untuk Shalat<br>
-                                Administrasi: 08.00 - 17.00 WIB
+                                {!! nl2br(e($profile->operating_hours ?? 'Buka 24 Jam untuk Shalat' . "\n" . 'Administrasi: 08.00 - 17.00 WIB')) !!}
                             </p>
                         </div>
 
                         <div class="mt-auto">
-                            <a href="https://maps.google.com/?q=Masjid+Al+Muta'allimin+Fakultas+Teknik+Untirta" 
+                            @php
+                                $mapsUrl = $profile->maps_url ?? 'https://maps.google.com/?q=Masjid+Al+Mutaallimin+Fakultas+Teknik+Untirta';
+                            @endphp
+                            <a href="{{ $mapsUrl }}" 
                                target="_blank" 
                                class="btn btn-primary-custom w-100">
                                 <i class="bi bi-arrow-up-right-circle me-2"></i>Buka di Google Maps
@@ -316,22 +344,27 @@
                 </div>
             </div>
 
+            <!-- Maps -->
             <div class="col-lg-7">
                 <div class="card card-custom h-100">
-                    <div class="card-body p-0 h-100">
+                    <div class="card-body p-0 d-flex align-items-stretch"> <!-- Tambahkan ini -->
                         <!-- Google Maps Embed -->
                         @if($profile && $profile->maps_embed)
-                            {!! $profile->maps_embed !!}
+                            <div class="maps-container w-100">
+                                {!! $profile->maps_embed !!}
+                            </div>
                         @else
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.037200799374!2d106.1504741750117!3d-6.125511993865611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e418adaa4f7f563%3A0x950ec58123df8596!2sUniversitas%20Sultan%20Ageng%20Tirtayasa%20(UNTIRTA)%20Kampus%20Cilegon!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 
-                            width="100%" 
-                            height="100%"
-                            style="border:0; border-radius: 12px;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                        <div class="maps-container w-100">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.037200799374!2d106.1504741750117!3d-6.125511993865611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e418adaa4f7f563%3A0x950ec58123df8596!2sUniversitas%20Sultan%20Ageng%20Tirtayasa%20(UNTIRTA)%20Kampus%20Cilegon!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 
+                                width="100%" 
+                                height="100%"
+                                style="border:0; border-radius: 12px;"
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -339,6 +372,32 @@
         </div>
     </div>
 </section>
+
+<style>
+.maps-container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Biarkan 100% agar mengikuti card */
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.maps-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* HAPUS min-height dan max-height dari card-custom */
+.card-custom {
+    /* Kosongkan, biarkan natural height */
+}
+
+/* Pastikan card-body maps stretch */
+.card-body.p-0.d-flex.align-items-stretch {
+    padding: 0 !important;
+}
+</style>
 
 <!-- CTA Section -->
 <section class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">

@@ -1,75 +1,81 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Kelola Pengurus')
+
 @section('content')
-<div class="container py-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Kelola Pengurus</h2>
+    <a href="{{ route('admin.pengurus.create') }}" class="btn btn-warning">
+        <i class="bi bi-plus-circle"></i> Tambah Pengurus
+    </a>
+</div>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Daftar Pengurus</h2>
-        <a href="{{ route('admin.pengurus.create') }}" class="btn btn-primary">
-            + Tambah Pengurus
-        </a>
+<div class="card">
+    <div class="card-body">
+        @if($pengurus->count() > 0)
+            <div class="row g-3">
+                @foreach($pengurus as $p)
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card h-100">
+                            <!-- Foto Pengurus -->
+                            <div class="text-center p-3">
+                                <img src="{{ $p->foto ? asset('storage/' . $p->foto) : 'https://placehold.co/150x150/667eea/ffffff?text=' . urlencode(substr($p->nama, 0, 1)) }}" 
+                                     class="rounded-circle shadow-sm" 
+                                     width="100" height="100"
+                                     style="object-fit: cover;"
+                                     alt="{{ $p->nama }}"
+                                     onerror="this.src='https://placehold.co/150x150/667eea/ffffff?text=' + encodeURIComponent('{{ substr($p->nama, 0, 1) }}')">
+                            </div>
+                            
+                            <div class="card-body text-center">
+                                <h6 class="card-title fw-bold mb-2">{{ $p->nama }}</h6>
+                                <p class="text-primary mb-2">{{ $p->jabatan }}</p>
+                                
+                                @if($p->kontak)
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-whatsapp text-success"></i>
+                                    {{ $p->kontak }}
+                                </p>
+                                @endif
+                                
+                                <small class="text-muted">
+                                    <i class="bi bi-sort-numeric-up"></i>
+                                    Urutan: {{ $p->urutan }}
+                                </small>
+                            </div>
+                            
+                            <div class="card-footer bg-white border-top">
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <a href="{{ route('admin.pengurus.edit', $p->id) }}" 
+                                       class="btn btn-sm btn-warning flex-fill">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <form action="{{ route('admin.pengurus.destroy', $p->id) }}" 
+                                          method="POST" 
+                                          class="flex-fill"
+                                          onsubmit="return confirm('Yakin ingin menghapus pengurus ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger w-100">
+                                            <i class="bi bi-trash"></i> Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-5">
+                <i class="bi bi-people" style="font-size: 4rem; color: #cbd5e1;"></i>
+                <h5 class="mt-3 text-muted">Belum Ada Pengurus</h5>
+                <p class="text-muted">Klik tombol "Tambah Pengurus" untuk menambah data pertama</p>
+                <a href="{{ route('admin.pengurus.create') }}" class="btn btn-warning mt-2">
+                    <i class="bi bi-plus-circle"></i> Tambah Pengurus
+                </a>
+            </div>
+        @endif
     </div>
-
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    <div class="card shadow-sm">
-        <div class="card-body">
-
-            <table class="table table-bordered table-striped">
-                <thead class="table-primary">
-                    <tr>
-                        <th width="90">Foto</th>
-                        <th>Nama</th>
-                        <th>Jabatan</th>
-                        <th>Kontak</th>
-                        <th width="80">Urutan</th>
-                        <th width="150">Aksi</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @forelse($pengurus as $p)
-                        <tr>
-                            <td>
-                                <img src="{{ $p->foto ? asset('storage/' . $p->foto) : 'https://placehold.co/80x80?text=No+Foto' }}"
-                                     width="60" height="60"
-                                     class="rounded-circle">
-                            </td>
-
-                            <td>{{ $p->nama }}</td>
-                            <td>{{ $p->jabatan }}</td>
-                            <td>{{ $p->kontak ?? '-' }}</td>
-                            <td>{{ $p->urutan }}</td>
-
-                            <td>
-                                <a href="{{ route('admin.pengurus.edit', $p->id) }}" 
-                                   class="btn btn-sm btn-warning">Edit</a>
-
-                                <form action="{{ route('admin.pengurus.destroy', $p->id) }}" 
-                                      method="POST" 
-                                      class="d-inline">
-                                    @csrf @method('DELETE')
-                                    <button class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Hapus pengurus ini?')">
-                                        Hapus
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center text-muted">Belum ada pengurus.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-
-            </table>
-
-        </div>
-    </div>
-
 </div>
 @endsection

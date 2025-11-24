@@ -19,7 +19,9 @@ class MasjidProfile extends Model
         'public_info',
         'whatsapp',
         'address',  
-        'maps_embed',   
+        'maps_embed',
+        'operating_hours',
+        'maps_url',
         'facilities',
     ];
 

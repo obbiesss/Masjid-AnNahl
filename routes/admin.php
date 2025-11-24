@@ -39,6 +39,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('prayers', PrayerTimeAdminController::class);
 
     // Profil Masjid
+    Route::get('profile', [MasjidProfileAdminController::class, 'index'])->name('profile.index');
     Route::get('profile/edit', [MasjidProfileAdminController::class, 'edit'])->name('profile.edit');
     Route::post('profile/update', [MasjidProfileAdminController::class, 'update'])->name('profile.update');
 
