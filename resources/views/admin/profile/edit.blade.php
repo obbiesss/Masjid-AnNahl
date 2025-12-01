@@ -6,46 +6,53 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Edit Profil Masjid</h2>
     <a href="{{ route('admin.profile.index') }}" class="btn btn-secondary">
-        <i class="bi bi-arrow-left"></i> Kembali ke Profil
+        <i class="bi bi-arrow-left me-1"></i>Kembali
     </a>
 </div>
 
 @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle me-2"></i>
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="d-flex align-items-center">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <div>{{ session('success') }}</div>
     </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
 @endif
 
 @if($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i>
-        Terdapat kesalahan dalam pengisian form. Silakan periksa kembali.
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="d-flex align-items-center">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <div>Terdapat kesalahan dalam pengisian form. Silakan periksa kembali.</div>
     </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
 @endif
 
-<div class="card">
-    <div class="card-body">
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
         <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- Tentang Masjid -->
             <div class="mb-5">
-                <h5 class="card-title mb-4 border-bottom pb-3 text-success">
-                    <i class="bi bi-building me-2"></i>Tentang Masjid
-                </h5>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                        <i class="bi bi-building text-primary" style="font-size: 1.2rem;"></i>
+                    </div>
+                    <h5 class="mb-0 text-primary">Tentang Masjid</h5>
+                </div>
                 
                 <div class="mb-4">
-                    <label for="about_image" class="form-label">Gambar Tentang Masjid</label>
+                    <label for="about_image" class="form-label fw-medium">Gambar Tentang Masjid</label>
                     <input type="file" 
                            name="about_image" 
                            id="about_image"
                            class="form-control @error('about_image') is-invalid @enderror" 
                            accept="image/*">
                     @error('about_image')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                     <div class="form-text">Format: JPG, JPEG, PNG. Maksimal 2MB.</div>
                     
@@ -53,7 +60,7 @@
                         <div class="mt-3">
                             <p class="text-muted mb-2">Gambar saat ini:</p>
                             <img src="{{ asset('storage/' . $profile->about_image) }}" 
-                                 class="rounded border" 
+                                 class="rounded-3 border" 
                                  style="width: 200px; height: 150px; object-fit: cover;"
                                  alt="Gambar Masjid">
                         </div>
@@ -61,7 +68,10 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="about_text_1" class="form-label">Deskripsi Tentang Masjid (Bagian 1) <span class="text-danger">*</span></label>
+                    <label for="about_text_1" class="form-label fw-medium">
+                        Deskripsi Tentang Masjid (Bagian 1) 
+                        <span class="text-danger">*</span>
+                    </label>
                     <textarea name="about_text_1" 
                               id="about_text_1"
                               class="form-control @error('about_text_1') is-invalid @enderror" 
@@ -69,33 +79,40 @@
                               placeholder="Tuliskan deskripsi tentang masjid..."
                               required>{{ old('about_text_1', $profile->about_text_1 ?? '') }}</textarea>
                     @error('about_text_1')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label for="about_text_2" class="form-label">Deskripsi Tentang Masjid (Bagian 2)</label>
+                    <label for="about_text_2" class="form-label fw-medium">Deskripsi Tentang Masjid (Bagian 2)</label>
                     <textarea name="about_text_2" 
                               id="about_text_2"
                               class="form-control @error('about_text_2') is-invalid @enderror" 
                               rows="4" 
                               placeholder="Tuliskan deskripsi tambahan tentang masjid...">{{ old('about_text_2', $profile->about_text_2 ?? '') }}</textarea>
                     @error('about_text_2')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
 
-            <hr>
+            <!-- Divider -->
+            <div class="border-top my-5"></div>
 
             <!-- Visi & Misi -->
             <div class="mb-5">
-                <h5 class="card-title mb-4 border-bottom pb-3 text-success">
-                    <i class="bi bi-bullseye me-2"></i>Visi & Misi
-                </h5>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-success bg-opacity-10 p-2 rounded-circle me-3">
+                        <i class="bi bi-bullseye text-success" style="font-size: 1.2rem;"></i>
+                    </div>
+                    <h5 class="mb-0 text-success">Visi & Misi</h5>
+                </div>
                 
                 <div class="mb-4">
-                    <label for="visi" class="form-label">Visi Masjid <span class="text-danger">*</span></label>
+                    <label for="visi" class="form-label fw-medium">
+                        Visi Masjid 
+                        <span class="text-danger">*</span>
+                    </label>
                     <textarea name="visi" 
                               id="visi"
                               class="form-control @error('visi') is-invalid @enderror" 
@@ -103,13 +120,16 @@
                               placeholder="Tuliskan visi masjid..."
                               required>{{ old('visi', $profile->visi ?? '') }}</textarea>
                     @error('visi')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                     <div class="form-text">Gunakan enter untuk membuat paragraf baru</div>
                 </div>
 
                 <div class="mb-4">
-                    <label for="misi" class="form-label">Misi Masjid <span class="text-danger">*</span></label>
+                    <label for="misi" class="form-label fw-medium">
+                        Misi Masjid 
+                        <span class="text-danger">*</span>
+                    </label>
                     <textarea name="misi" 
                               id="misi"
                               class="form-control @error('misi') is-invalid @enderror" 
@@ -117,23 +137,30 @@
                               placeholder="Tuliskan misi masjid..."
                               required>{{ old('misi', $profile->misi ?? '') }}</textarea>
                     @error('misi')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                     <div class="form-text">Gunakan enter untuk membuat poin-poin misi</div>
                 </div>
             </div>
 
-            <hr>
+            <!-- Divider -->
+            <div class="border-top my-5"></div>
 
             <!-- Statistik Masjid -->
             <div class="mb-5">
-                <h5 class="card-title mb-4 border-bottom pb-3 text-success">
-                    <i class="bi bi-graph-up me-2"></i>Statistik Masjid
-                </h5>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-warning bg-opacity-10 p-2 rounded-circle me-3">
+                        <i class="bi bi-graph-up text-warning" style="font-size: 1.2rem;"></i>
+                    </div>
+                    <h5 class="mb-0 text-warning">Statistik Masjid</h5>
+                </div>
                 
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <label for="capacity" class="form-label">Kapasitas Jamaah <span class="text-danger">*</span></label>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="capacity" class="form-label fw-medium">
+                            Kapasitas Jamaah 
+                            <span class="text-danger">*</span>
+                        </label>
                         <input type="number" 
                                name="capacity" 
                                id="capacity"
@@ -142,12 +169,15 @@
                                placeholder="Contoh: 500"
                                required>
                         @error('capacity')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
                     
-                    <div class="col-md-6 mb-4">
-                        <label for="year" class="form-label">Tahun Berdiri <span class="text-danger">*</span></label>
+                    <div class="col-md-6">
+                        <label for="year" class="form-label fw-medium">
+                            Tahun Berdiri 
+                            <span class="text-danger">*</span>
+                        </label>
                         <input type="number" 
                                name="year" 
                                id="year"
@@ -156,13 +186,16 @@
                                placeholder="Contoh: 1990"
                                required>
                         @error('year')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label for="routine_activities" class="form-label">Kegiatan Rutin <span class="text-danger">*</span></label>
+                <div class="mt-4">
+                    <label for="routine_activities" class="form-label fw-medium">
+                        Kegiatan Rutin 
+                        <span class="text-danger">*</span>
+                    </label>
                     <input type="text" 
                            name="routine_activities" 
                            id="routine_activities"
@@ -171,12 +204,15 @@
                            placeholder="Contoh: Pengajian Mingguan, TPQ, dll"
                            required>
                     @error('routine_activities')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="mb-4">
-                    <label for="public_info" class="form-label">Informasi Publik <span class="text-danger">*</span></label>
+                <div class="mt-4">
+                    <label for="public_info" class="form-label fw-medium">
+                        Informasi Publik 
+                        <span class="text-danger">*</span>
+                    </label>
                     <input type="text" 
                            name="public_info" 
                            id="public_info"
@@ -185,21 +221,28 @@
                            placeholder="Contoh: Terbuka untuk umum"
                            required>
                     @error('public_info')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
 
-            <hr>
+            <!-- Divider -->
+            <div class="border-top my-5"></div>
 
             <!-- Kontak -->
             <div class="mb-5">
-                <h5 class="card-title mb-4 border-bottom pb-3 text-success">
-                    <i class="bi bi-telephone me-2"></i>Kontak
-                </h5>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-info bg-opacity-10 p-2 rounded-circle me-3">
+                        <i class="bi bi-telephone text-info" style="font-size: 1.2rem;"></i>
+                    </div>
+                    <h5 class="mb-0 text-info">Kontak</h5>
+                </div>
                 
-                <div class="mb-4">
-                    <label for="whatsapp" class="form-label">Nomor WhatsApp <span class="text-danger">*</span></label>
+                <div>
+                    <label for="whatsapp" class="form-label fw-medium">
+                        Nomor WhatsApp 
+                        <span class="text-danger">*</span>
+                    </label>
                     <input type="text" 
                            name="whatsapp" 
                            id="whatsapp"
@@ -208,58 +251,70 @@
                            placeholder="Contoh: 6281234567890"
                            required>
                     @error('whatsapp')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                     <div class="form-text">Masukkan nomor tanpa tanda + atau spasi</div>
                 </div>
             </div>
 
-            <hr>
+            <!-- Divider -->
+            <div class="border-top my-5"></div>
 
             <!-- Lokasi & Maps -->
             <div class="mb-5">
-                <h5 class="card-title mb-4 border-bottom pb-3 text-success">
-                    <i class="bi bi-geo-alt me-2"></i>Lokasi & Maps
-                </h5>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-danger bg-opacity-10 p-2 rounded-circle me-3">
+                        <i class="bi bi-geo-alt text-danger" style="font-size: 1.2rem;"></i>
+                    </div>
+                    <h5 class="mb-0 text-danger">Lokasi & Maps</h5>
+                </div>
                 
                 <div class="mb-4">
-                    <label for="address" class="form-label">Alamat Lengkap <span class="text-danger">*</span></label>
+                    <label for="address" class="form-label fw-medium">
+                        Alamat Lengkap 
+                        <span class="text-danger">*</span>
+                    </label>
                     <textarea name="address" 
                               id="address"
                               class="form-control @error('address') is-invalid @enderror" 
                               rows="3" 
                               placeholder="Tuliskan alamat lengkap masjid..."
-                              required>{{ old('address', $profile->address ?? 'Jl. Jenderal Sudirman KM 3, Kotabumi, Kec. Purwakarta, Kota Cilegon, Banten 42435, Indonesia') }}</textarea>
+                              required>{{ old('address', $profile->address ?? '') }}</textarea>
                     @error('address')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <!-- Jam Operasional -->
                 <div class="mb-4">
-                    <label for="operating_hours" class="form-label">Jam Operasional <span class="text-danger">*</span></label>
+                    <label for="operating_hours" class="form-label fw-medium">
+                        Jam Operasional 
+                        <span class="text-danger">*</span>
+                    </label>
                     <textarea name="operating_hours" 
                               id="operating_hours"
                               class="form-control @error('operating_hours') is-invalid @enderror" 
                               rows="2" 
                               placeholder="Contoh: Buka 24 Jam untuk Shalat&#10;Administrasi: 08.00 - 17.00 WIB"
-                              required>{{ old('operating_hours', $profile->operating_hours ?? 'Buka 24 Jam untuk Shalat' . "\n" . 'Administrasi: 08.00 - 17.00 WIB') }}</textarea>
+                              required>{{ old('operating_hours', $profile->operating_hours ?? '') }}</textarea>
                     @error('operating_hours')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                     <div class="form-text">Gunakan enter untuk baris baru</div>
                 </div>
 
                 <div class="mb-4">
-                    <label for="maps_embed" class="form-label">Embed Google Maps <span class="text-danger">*</span></label>
+                    <label for="maps_embed" class="form-label fw-medium">
+                        Embed Google Maps 
+                        <span class="text-danger">*</span>
+                    </label>
                     <textarea name="maps_embed" 
                               id="maps_embed"
                               class="form-control @error('maps_embed') is-invalid @enderror" 
                               rows="4" 
                               placeholder="Paste kode embed Google Maps di sini..."
-                              required>{{ old('maps_embed', $profile->maps_embed ?? '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.037200799374!2d106.1504741750117!3d-6.125511993865611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e418adaa4f7f563%3A0x950ec58123df8596!2sUniversitas%20Sultan%20Ageng%20Tirtayasa%20(UNTIRTA)%20Kampus%20Cilegon!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" width="100%" height="100%" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>') }}</textarea>
+                              required>{{ old('maps_embed', $profile->maps_embed ?? '') }}</textarea>
                     @error('maps_embed')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                     <div class="form-text">
                         Cara mendapatkan embed code:<br>
@@ -270,30 +325,36 @@
                     </div>
                 </div>
 
-                <!-- Google Maps URL -->
-                <div class="mb-4">
-                    <label for="maps_url" class="form-label">Google Maps URL <span class="text-danger">*</span></label>
+                <div>
+                    <label for="maps_url" class="form-label fw-medium">
+                        Google Maps URL 
+                        <span class="text-danger">*</span>
+                    </label>
                     <input type="text" 
                            name="maps_url" 
                            id="maps_url"
                            class="form-control @error('maps_url') is-invalid @enderror" 
-                           value="{{ old('maps_url', $profile->maps_url ?? 'https://maps.google.com/?q=Masjid+Al+Mutaallimin+Fakultas+Teknik+Untirta') }}" 
+                           value="{{ old('maps_url', $profile->maps_url ?? '') }}" 
                            placeholder="https://maps.google.com/?q=Alamat+Masjid"
                            required>
                     @error('maps_url')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                     <div class="form-text">Link untuk tombol "Buka di Google Maps"</div>
                 </div>
             </div>
 
-            <hr>
+            <!-- Divider -->
+            <div class="border-top my-5"></div>
 
             <!-- Fasilitas -->
             <div class="mb-5">
-                <h5 class="card-title mb-4 border-bottom pb-3 text-success">
-                    <i class="bi bi-building me-2"></i>Fasilitas Masjid
-                </h5>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-purple bg-opacity-10 p-2 rounded-circle me-3">
+                        <i class="bi bi-building text-purple" style="font-size: 1.2rem;"></i>
+                    </div>
+                    <h5 class="mb-0 text-purple">Fasilitas</h5>
+                </div>
                 
                 <div id="facilities-container">
                     @php
@@ -308,10 +369,13 @@
                     @endphp
                     
                     @foreach($facilities as $index => $facility)
-                    <div class="facility-item border rounded p-3 mb-3">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Nama Fasilitas <span class="text-danger">*</span></label>
+                    <div class="facility-item border rounded-3 p-4 mb-3 bg-light">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-medium">
+                                    Nama Fasilitas 
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input type="text" 
                                        name="facility_name[]" 
                                        class="form-control" 
@@ -319,8 +383,11 @@
                                        placeholder="Contoh: Ruang Shalat"
                                        required>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Icon <span class="text-danger">*</span></label>
+                            <div class="col-md-3">
+                                <label class="form-label fw-medium">
+                                    Icon 
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <select name="facility_icon[]" class="form-select" required>
                                     <option value="bi-building" {{ $facility['icon'] == 'bi-building' ? 'selected' : '' }}>Gedung</option>
                                     <option value="bi-droplet" {{ $facility['icon'] == 'bi-droplet' ? 'selected' : '' }}>Air Wudhu</option>
@@ -332,8 +399,11 @@
                                     <option value="bi-mic" {{ $facility['icon'] == 'bi-mic' ? 'selected' : '' }}>Sound System</option>
                                 </select>
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Deskripsi <span class="text-danger">*</span></label>
+                            <div class="col-md-4">
+                                <label class="form-label fw-medium">
+                                    Deskripsi 
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input type="text" 
                                        name="facility_description[]" 
                                        class="form-control" 
@@ -341,8 +411,9 @@
                                        placeholder="Deskripsi singkat"
                                        required>
                             </div>
-                            <div class="col-md-1 d-flex align-items-end mb-3">
-                                <button type="button" class="btn btn-danger btn-sm remove-facility w-100 h-100 d-flex align-items-center justify-content-center" {{ $index == 0 ? 'disabled' : '' }}>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-outline-danger remove-facility w-100 h-100 d-flex align-items-center justify-content-center rounded-3" 
+                                        {{ $index == 0 ? 'disabled' : '' }}>
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -351,18 +422,18 @@
                     @endforeach
                 </div>
                 
-                <button type="button" id="add-facility" class="btn btn-outline-success btn-sm">
-                    <i class="bi bi-plus-circle"></i> Tambah Fasilitas
+                <button type="button" id="add-facility" class="btn btn-outline-primary mt-3 rounded-3">
+                    <i class="bi bi-plus-circle me-1"></i> Tambah Fasilitas
                 </button>
             </div>
 
             <!-- Submit Button -->
-            <div class="d-flex justify-content-end gap-2">
-                <a href="{{ route('admin.profile.index') }}" class="btn btn-secondary">
-                    <i class="bi bi-x-circle"></i> Batal
+            <div class="d-flex justify-content-end gap-3 pt-4 border-top">
+                <a href="{{ route('admin.profile.index') }}" class="btn btn-outline-secondary rounded-3 px-4">
+                    <i class="bi bi-x-circle me-1"></i> Batal
                 </a>
-                <button type="submit" class="btn btn-success">
-                    <i class="bi bi-check-circle me-2"></i>Simpan Perubahan
+                <button type="submit" class="btn btn-primary rounded-3 px-4">
+                    <i class="bi bi-check-circle me-1"></i>Simpan Perubahan
                 </button>
             </div>
         </form>
@@ -374,15 +445,15 @@
 document.getElementById('add-facility').addEventListener('click', function() {
     const container = document.getElementById('facilities-container');
     const newItem = document.createElement('div');
-    newItem.className = 'facility-item border rounded p-3 mb-3';
+    newItem.className = 'facility-item border rounded-3 p-4 mb-3 bg-light';
     newItem.innerHTML = `
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Nama Fasilitas <span class="text-danger">*</span></label>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label fw-medium">Nama Fasilitas <span class="text-danger">*</span></label>
                 <input type="text" name="facility_name[]" class="form-control" placeholder="Contoh: Ruang Shalat" required>
             </div>
-            <div class="col-md-3 mb-3">
-                <label class="form-label">Icon <span class="text-danger">*</span></label>
+            <div class="col-md-3">
+                <label class="form-label fw-medium">Icon <span class="text-danger">*</span></label>
                 <select name="facility_icon[]" class="form-select" required>
                     <option value="bi-building">Gedung</option>
                     <option value="bi-droplet">Air Wudhu</option>
@@ -394,12 +465,12 @@ document.getElementById('add-facility').addEventListener('click', function() {
                     <option value="bi-mic">Sound System</option>
                 </select>
             </div>
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Deskripsi <span class="text-danger">*</span></label>
+            <div class="col-md-4">
+                <label class="form-label fw-medium">Deskripsi <span class="text-danger">*</span></label>
                 <input type="text" name="facility_description[]" class="form-control" placeholder="Deskripsi singkat" required>
             </div>
-            <div class="col-md-1 d-flex align-items-end mb-3">
-                <button type="button" class="btn btn-danger btn-sm remove-facility w-100 h-100 d-flex align-items-center justify-content-center">
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="button" class="btn btn-outline-danger remove-facility w-100 h-100 d-flex align-items-center justify-content-center rounded-3">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
@@ -408,9 +479,8 @@ document.getElementById('add-facility').addEventListener('click', function() {
     container.appendChild(newItem);
 });
 
-// Remove facility - FIXED VERSION
+// Remove facility
 document.addEventListener('click', function(e) {
-    // Cek jika yang diklik adalah tombol remove atau elemen di dalamnya
     const removeBtn = e.target.closest('.remove-facility');
     if (removeBtn && !removeBtn.disabled) {
         const facilityItem = removeBtn.closest('.facility-item');
@@ -422,54 +492,56 @@ document.addEventListener('click', function(e) {
 </script>
 
 <style>
-.facility-item {
-    background-color: #f8f9fa;
+:root {
+    --purple: #6f42c1;
+}
+
+.bg-purple {
+    background-color: var(--purple) !important;
+}
+
+.text-purple {
+    color: var(--purple) !important;
+}
+
+/* CSS lainnya yang sudah ada di index.blade.php */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.rounded-3 {
+    border-radius: 0.75rem !important;
+}
+
+.btn-primary {
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
 }
 
-.facility-item:hover {
-    background-color: #e9ecef;
-}
-
-/* Improve form styling dengan warna hijau */
-.form-control:focus {
-    border-color: #198754;
-    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
-}
-
-.form-select:focus {
-    border-color: #198754;
-    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
-}
-
-.visi-misi-text {
-    white-space: pre-line;
-    line-height: 1.6;
-}
-
-/* Pastikan tombol delete bisa diklik di seluruh area */
-.remove-facility {
-    min-height: 38px;
-    display: flex !important;
+/* Tambahan untuk icon fasilitas */
+.bg-purple.bg-opacity-10 {
+    background-color: rgba(111, 66, 193, 0.1) !important;
+    width: 40px;
+    height: 40px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    border: 1px solid #dc3545;
-}
-
-/* Hover effect untuk tombol delete */
-.remove-facility:hover:not(:disabled) {
-    background-color: #dc3545 !important;
-    border-color: #dc3545 !important;
-    color: white;
-}
-
-/* Style untuk tombol yang disabled */
-.remove-facility:disabled {
-    background-color: #6c757d !important;
-    border-color: #6c757d !important;
-    cursor: not-allowed;
-    opacity: 0.6;
 }
 </style>
 @endsection

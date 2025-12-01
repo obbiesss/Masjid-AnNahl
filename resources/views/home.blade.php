@@ -13,7 +13,7 @@
 
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200" class="d-block w-100"
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSz1vQC_MFp5wQXqmjVa9Bvz82pqGf9ry0EiZdMuoDYuypKH8u5hnzK6U5w3nJDGBlnvNE9nOEb461SuXG5poB88oNp9w-iUU6q9iY3vbL3yHsJmw58XWllaifBmp5GDju8quI-k=s1360-w1360-h1020-rw" class="d-block w-100"
                     alt="Masjid 1">
                 <div class="carousel-caption">
                     <h1 class="display-4 fw-bold">Assalamu'alaikum – Selamat Datang</h1>
@@ -29,15 +29,15 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="https://images.unsplash.com/photo-1564769625905-50e93615e769?w=1200" class="d-block w-100"
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyEPNM_hi0czrDZ8pdqU3BRbIV1-E1REp5WFoItyw5pTxdx1SkUQ6qHscFyxjui5QlWUljc4aMFgx8yYicGxiUKsxeGfHxma7vAK6qIJM5dJFVQLfBOSx2n5o1Sqb8FNJY01PIJ=s1360-w1360-h1020-rw" class="d-block w-100"
                     alt="Masjid 2">
                 <div class="carousel-caption">
                     <h2 class="display-5 fw-bold">Tempat Ibadah dan Pembelajaran</h2>
-                    <p class="lead">Masjid An Nahl Fakultas Teknik Untirta</p>
+                    <p class="lead">Masjid An Nahl Al Mubarokah</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=1200" class="d-block w-100"
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyWApIKB9Gxz3iF4QswV2PiLuzjithm8A_6QfcI1XmpO8GeUCV5nBTMIlnwmE1pGtlL6tuzdQ6KCrWEy7FYEsGTdpPmEdwn3b9wrhAB-oSXZ_-SU0_TDRFoLqXyUCUa8Nzo9LF9qw=s1360-w1360-h1020-rw" class="d-block w-100"
                     alt="Masjid 3">
                 <div class="carousel-caption">
                     <h2 class="display-5 fw-bold">Mari Memakmurkan Masjid</h2>
@@ -54,7 +54,7 @@
         </button>
     </div>
 
-    <!-- Jadwal Sholat Section -->
+    <!-- Jadwal Sholat Section
     @if(isset($prayerTime))
         <div class="container my-5">
             <div class="card shadow-lg">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     @endif
 
 

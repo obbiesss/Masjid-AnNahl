@@ -9,7 +9,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-4">Profil Masjid</h1>
-                    <p class="lead">Mengenal lebih dekat Masjid An Nahl Fakultas Teknik Untirta</p>
+                    <p class="lead">Mengenal lebih dekat Masjid An Nahl Al Mubarokah</p>
                 </div>
             </div>
         </div>

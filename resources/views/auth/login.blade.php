@@ -107,11 +107,11 @@
                         <img src="https://kompaspedia.kompas.id/wp-content/uploads/2021/07/Logo-Universitas-Sultan-Ageng-Tirtayasa_thumb.png" alt="Logo">
                     </div>
                     <h2 class="fw-bold mb-3">Selamat Datang!</h2>
-                    <p class="mb-4">Silakan login untuk mengakses dashboard admin Masjid Al Muta'allimin</p>
+                    <p class="mb-4">Silakan login untuk mengakses dashboard admin Masjid An Nahl</p>
                     
                     <div class="mt-auto">
                         <i class="bi bi-mosque fs-1 opacity-50"></i>
-                        <p class="mt-3 opacity-75">Masjid Al Muta'allimin<br>Fakultas Teknik Untirta</p>
+                        <p class="mt-3 opacity-75">Masjid An Nahl<br>Al Mubarokah</p>
                     </div>
                     
                     <a href="{{ route('home') }}" class="back-home">
