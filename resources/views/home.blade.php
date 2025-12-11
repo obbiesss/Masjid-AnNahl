@@ -172,41 +172,188 @@
         </div>
     </section>
 
-    <!-- Galeri Section -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Galeri</h2>
-                <p class="text-muted">Dokumentasi kegiatan & fasilitas masjid</p>
-            </div>
+<<!-- Galeri Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Galeri</h2>
+            <p class="text-muted">Dokumentasi kegiatan & fasilitas masjid</p>
+        </div>
 
-            <div class="row g-4">
-                @forelse($galleries as $gallery)
-                    <div class="col-md-3 col-6">
-                        <div class="card card-custom h-100">
-                            <img src="{{ asset('storage/' . $gallery->image) }}" class="card-img-top"
-                                alt="{{ $gallery->title }}" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <p class="mb-0">{{ $gallery->title }}</p>
+        <div class="row g-4">
+            @forelse($galleries as $gallery)
+                @php
+                    $media = $gallery->image ?? $gallery->video;
+                    $ext = strtolower(pathinfo($media, PATHINFO_EXTENSION));
+                    
+                    $isImage = in_array($ext, ['jpg','jpeg','png','gif','webp']);
+                    $isVideo = in_array($ext, ['mp4','mov','avi','mkv','webm']);
+                    
+                    // Fix untuk path yang tidak lengkap
+                    $videoPath = $gallery->video;
+                    if ($videoPath && !str_contains($videoPath, '/')) {
+                        $videoPath = 'galleries/videos/' . $videoPath;
+                    }
+                    
+                    $imagePath = $gallery->image;
+                    if ($imagePath && !str_contains($imagePath, '/')) {
+                        $imagePath = 'galleries/images/' . $imagePath;
+                    }
+                @endphp
+
+                <div class="col-md-3 col-6">
+                    <div class="card card-custom h-100 gallery-card-landing">
+                        <div class="position-relative" style="height: 200px; overflow: hidden; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalGallery{{ $gallery->id }}">
+                            @if ($isImage && $gallery->image)
+                                <img 
+                                    src="{{ Storage::url($imagePath) }}" 
+                                    class="w-100 h-100 gallery-img-landing"
+                                    alt="{{ $gallery->title }}"
+                                    style="object-fit: cover;"
+                                    onerror="this.parentElement.innerHTML='<div class=\'d-flex justify-content-center align-items-center w-100 h-100 bg-light\'><i class=\'bi bi-image-fill text-muted\' style=\'font-size: 3rem;\'></i></div>'"
+                                >
+                                
+                                {{-- Zoom overlay untuk gambar --}}
+                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center gallery-overlay-landing">
+                                    <i class="bi bi-zoom-in text-white" style="font-size: 2.5rem;"></i>
+                                </div>
+                            
+                            @elseif ($isVideo && $gallery->video)
+                                <video 
+                                    preload="metadata"
+                                    class="w-100 h-100"
+                                    style="object-fit: cover; background: #000;"
+                                    playsinline
+                                >
+                                    <source src="{{ Storage::url($videoPath) }}" type="video/mp4">
+                                </video>
+                                
+                                {{-- Play button overlay --}}
+                                <div class="position-absolute top-50 start-50 translate-middle" style="pointer-events: none;">
+                                    <i class="bi bi-play-circle-fill text-white" style="font-size: 3.5rem; opacity: 0.9; text-shadow: 0 2px 8px rgba(0,0,0,0.5);"></i>
+                                </div>
+                            
+                            @else
+                                <div class="d-flex justify-content-center align-items-center w-100 h-100 bg-light">
+                                    <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                                </div>
+                            @endif
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title mb-2" style="font-size: 0.95rem;">{{ $gallery->title }}</h5>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar3"></i>
+                                    {{ $gallery->created_at->format('d M Y') }}
+                                </small>
+                                
+                                @if($isVideo)
+                                    <span class="badge bg-primary">
+                                        <i class="bi bi-camera-video"></i> Video
+                                    </span>
+                                @elseif($isImage)
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-image"></i> Foto
+                                    </span>
+                                @endif
                             </div>
                         </div>
                     </div>
-                @empty
-                    <div class="col-12">
-                        <p class="text-center text-muted">Belum ada galeri.</p>
-                    </div>
-                @endforelse
-            </div>
-
-            @if($galleries->count() > 0)
-                <div class="text-center mt-4">
-                    <a href="{{ route('galeri') }}" class="btn btn-primary-custom">
-                        Lihat Semua Galeri <i class="bi bi-arrow-right"></i>
-                    </a>
                 </div>
-            @endif
+
+                {{-- Modal untuk preview full --}}
+                <div class="modal fade" id="modalGallery{{ $gallery->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ $gallery->title }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-0">
+                                @if ($isImage && $gallery->image)
+                                    <img 
+                                        src="{{ Storage::url($imagePath) }}" 
+                                        alt="{{ $gallery->title }}"
+                                        class="w-100"
+                                        style="object-fit: contain; max-height: 80vh;"
+                                    >
+                                @elseif ($isVideo && $gallery->video)
+                                    <video 
+                                        controls
+                                        class="w-100"
+                                        style="background: #000; max-height: 80vh;"
+                                        playsinline
+                                    >
+                                        <source src="{{ Storage::url($videoPath) }}" type="video/mp4">
+                                        Browser Anda tidak mendukung video ini.
+                                    </video>
+                                @endif
+                            </div>
+                            <div class="modal-footer">
+                                <small class="text-muted me-auto">
+                                    <i class="bi bi-calendar3"></i>
+                                    {{ $gallery->created_at->format('d F Y, H:i') }}
+                                </small>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            @empty
+                <div class="col-12">
+                    <p class="text-center text-muted">Belum ada galeri.</p>
+                </div>
+            @endforelse
         </div>
-    </section>
+
+        @if($galleries->count() > 0)
+            <div class="text-center mt-4">
+                <a href="{{ route('galeri') }}" class="btn btn-primary-custom">
+                    Lihat Semua Galeri <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        @endif
+    </div>
+</section>
+
+{{-- Custom Styles untuk Landing Gallery --}}
+<style>
+.gallery-card-landing {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-card-landing:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
+}
+
+.gallery-img-landing {
+    transition: transform 0.3s ease;
+}
+
+.gallery-card-landing:hover .gallery-img-landing {
+    transform: scale(1.05);
+}
+
+.gallery-overlay-landing {
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-card-landing:hover .gallery-overlay-landing {
+    opacity: 1;
+}
+
+.modal-content {
+    border-radius: 1rem;
+    overflow: hidden;
+}
+</style>
+
+</style>
 
     <!-- CTA Donasi -->
     <section class="py-5" style="background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);">

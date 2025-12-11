@@ -30,78 +30,62 @@ class GalleryAdminController extends Controller
      * Simpan galeri baru
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:4096',
-            'video' => 'nullable|mimes:mp4,mov,avi,wmv|max:204800'
-        ]);
+{
+    $request->validate([
+        'title' => 'required',
+        'image' => 'nullable|image|max:2048',
+        'video' => 'nullable|mimes:mp4,avi,mov,wmv|max:51200',
+    ]);
 
-        $gallery = new Gallery();
+    $data = ['title' => $request->title];
 
-        // Upload gambar
-        if ($request->hasFile('image')) {
-            $gallery->image = $request->file('image')->store('galleries', 'public');
-        }
-
-        // Upload video
-        if ($request->hasFile('video')) {
-             $videoName = time() . '.' . $request->video->extension();
-            $gallery->video = $request->file('video')->store('videos', 'public');
-
-            $gallery->video = $videoName;
-
-        }
-
-        $gallery->title = $request->title ?? null;
-        $gallery->save();
-
-        return back()->with('success', 'Gallery berhasil ditambahkan!');
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')->store('galleries/images', 'public');
     }
 
-    /**
-     * Form edit
-     */
+    if ($request->hasFile('video')) {
+        $data['video'] = $request->file('video')->store('galleries/videos', 'public');
+    }
+
+    Gallery::create($data);
+
+    return redirect()->route('admin.galleries.index')
+        ->with('success', 'Galeri berhasil ditambahkan');
+}
+
     public function edit(Gallery $gallery)
     {
         return view('admin.galleries.edit', compact('gallery'));
     }
+   public function update(Request $request, Gallery $gallery)
+{
+    $request->validate([
+        'title' => 'required',
+        'image' => 'nullable|image|max:2048',
+        'video' => 'nullable|mimes:mp4,avi,mov,wmv|max:51200',
+    ]);
 
-    /**
-     * Update data galeri (gambar + video)
-     */
-    public function update(Request $request, Gallery $gallery)
-    {
-        $request->validate([
-            'title' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:4096',
-            'video' => 'nullable|mimes:mp4,mov,avi,webm|max:500000',
-        ]);
+    $data = ['title' => $request->title];
 
-        // === UPDATE GAMBAR ===
-        if ($request->hasFile('image')) {
-            if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
-                Storage::disk('public')->delete($gallery->image);
-            }
-
-            $gallery->image = $request->file('image')->store('galleries', 'public');
+    if ($request->hasFile('image')) {
+        if ($gallery->image) {
+            Storage::disk('public')->delete($gallery->image);
         }
-
-        // === UPDATE VIDEO ===
-        if ($request->hasFile('video')) {
-            if ($gallery->video && Storage::disk('public')->exists($gallery->video)) {
-                Storage::disk('public')->delete($gallery->video);
-            }
-
-            $gallery->video = $request->file('video')->store('videos', 'public');
-        }
-
-        $gallery->title = $request->title ?? $gallery->title;
-        $gallery->save();
-
-        return redirect()->route('admin.galleries.index')
-            ->with('success', 'Galeri berhasil diperbarui!');
+        $data['image'] = $request->file('image')->store('galleries/images', 'public');
     }
+
+    if ($request->hasFile('video')) {
+        if ($gallery->video) {
+            Storage::disk('public')->delete($gallery->video);
+        }
+        $data['video'] = $request->file('video')->store('galleries/videos', 'public');
+    }
+
+    $gallery->update($data);
+
+    return redirect()->route('admin.galleries.index')
+        ->with('success', 'Galeri berhasil diupdate');
+}
 
     /**
      * Hapus galeri (gambar + video)
