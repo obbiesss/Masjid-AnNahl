@@ -205,7 +205,7 @@
                             </a>
                         </li>
 
-                        <hr class="text-secondary">
+                        {{-- <hr class="text-secondary"> --}}
 
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('home') }}">
