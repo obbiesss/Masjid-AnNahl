@@ -118,12 +118,21 @@ class ProfileController extends Controller
 
     public function updateKontak(Request $request)
     {
-        $data = $request->validate([
-            'whatsapp' => 'nullable|string',
+        $request->validate([
+            'whatsapp' => 'required|regex:/^62\d{9,13}$/',
+        ], [
+            'whatsapp.regex' => 'Format: 6285891331229 (62 + 9-13 digit, tanpa +, spasi, atau tanda hubung)'
         ]);
-
-        Profile::firstOrCreate([])->update($data);
-
+        
+        // Format nomor (pastikan 62 di depan)
+        $whatsapp = preg_replace('/\D/', '', $request->whatsapp);
+        $whatsapp = ltrim($whatsapp, '0+');
+        if (!str_starts_with($whatsapp, '62')) {
+            $whatsapp = '62' . $whatsapp;
+        }
+        
+        Profile::first()->update(['whatsapp' => $whatsapp]);
+        
         return back()->with('success', 'Kontak berhasil diperbarui.');
     }
 

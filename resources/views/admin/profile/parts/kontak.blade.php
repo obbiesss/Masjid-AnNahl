@@ -11,12 +11,20 @@
             Nomor WhatsApp
             <span class="text-danger">*</span>
         </label>
-        <input type="text" name="whatsapp" id="whatsapp" pattern="[0-9]+"
-            class="form-control @error('whatsapp') is-invalid @enderror"
-            value="{{ old('whatsapp', $profile->whatsapp ?? '') }}" required>
+        <input type="text" 
+               name="whatsapp" 
+               id="whatsapp"
+               class="form-control @error('whatsapp') is-invalid @enderror"
+               value="{{ old('whatsapp', $profile->whatsapp ?? '') }}" 
+               placeholder="6285891331229"
+               pattern="^62\d{9,13}$"
+               title="Format: 62xxxxxxxxxxx (contoh: 6285891331229)">
         @error('whatsapp')
             <div class="invalid-feedback d-block">{{ $message }}</div>
         @enderror
-        <div class="form-text">Masukkan nomor tanpa tanda + atau spasi</div>
+        <div class="form-text">
+            Format: 62xxxxxxxxxxx (62 adalah kode Indonesia, contoh: 6285891331229)
+            <br>Tanpa: +, spasi, atau tanda hubung
+        </div>
     </div>
 </div>

@@ -4,13 +4,11 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-4">Berita & Artikel</h1>
-                    <p class="lead">Update kabar terbaru komunitas & konten islami dari Masjid An Nahl</p>
-                </div>
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bold mb-3">Berita & Artikel</h1>
+                <p class="lead mb-0">Update kabar terbaru komunitas & konten islami dari Masjid An Nahl</p>
             </div>
         </div>
     </section>

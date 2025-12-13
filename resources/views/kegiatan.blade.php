@@ -4,13 +4,11 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-4">Kegiatan & Event</h1>
-                    <p class="lead">Agenda rutin dan insidental untuk jamaah Masjid An Nahl</p>
-                </div>
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bold mb-3">Kegiatan & Event</h1>
+                <p class="lead mb-0">Agenda rutin dan insidental untuk jamaah Masjid An Nahl</p>
             </div>
         </div>
     </section>
@@ -64,20 +62,17 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h3 class="mb-2">Ingin Mengadakan Kegiatan di Masjid?</h3>
-                    <p class="text-muted mb-0">Hubungi pengurus DKM untuk informasi lebih lanjut tentang peminjaman ruang
-                        dan fasilitas</p>
-                </div>
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center"> <!-- GANTI INI -->
+            <h3 class="mb-3">Ingin Mengadakan Kegiatan di Masjid?</h3>
+            <p class="text-muted">Hubungi pengurus DKM melalui tombol whatsapp di kanan bawah layar</p>
+                <!-- <div class="col-md-4 text-md-end mt-3 mt-md-0">
                     <a href="https://wa.me/6285891331229" target="_blank" class="btn btn-primary-custom">
                         <i class="bi bi-whatsapp"></i> Hubungi Admin
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 @endsection

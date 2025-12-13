@@ -186,28 +186,40 @@
     </div>
     <div class="card-body">
         <div class="row g-3">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <a href="{{ route('admin.activities.create') }}" class="btn btn-outline-primary w-100">
-                    <i class="bi bi-plus-circle me-2"></i>
-                    Tambah Kegiatan
+                    <i class="bi bi-calendar-plus me-1"></i>
+                    Kegiatan
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <a href="{{ route('admin.news.create') }}" class="btn btn-outline-success w-100">
-                    <i class="bi bi-plus-circle me-2"></i>
-                    Tambah Berita
+                    <i class="bi bi-newspaper me-1"></i>
+                    Berita
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <a href="{{ route('admin.galleries.create') }}" class="btn btn-outline-warning w-100">
-                    <i class="bi bi-plus-circle me-2"></i>
-                    Tambah Galeri
+                    <i class="bi bi-images me-1"></i>
+                    Galeri
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <a href="{{ route('admin.donations.create') }}" class="btn btn-outline-danger w-100">
-                    <i class="bi bi-plus-circle me-2"></i>
-                    Tambah Donasi
+                    <i class="bi bi-cash-coin me-1"></i>
+                    Donasi
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ route('admin.profile.index') }}" class="btn btn-outline-info w-100">
+                    <i class="bi bi-pencil me-1"></i>
+                    Profil
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ route('admin.pengurus.create') }}" class="btn btn-outline-dark w-100">
+                    <i class="bi bi-people me-1"></i>
+                    Pengurus
                 </a>
             </div>
         </div>
