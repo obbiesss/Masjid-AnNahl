@@ -281,7 +281,18 @@
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
+    <!-- WhatsApp Button -->
+    @if($profile && $profile->whatsapp)
+        <div class="position-fixed" style="right: 25px; bottom: 25px; z-index: 9999;">
+            <a href="https://wa.me/{{ $profile->whatsapp }}" target="_blank"
+                class="btn btn-success btn-lg rounded-circle shadow"
+                style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                <i class="bi bi-whatsapp fs-5"></i>
+            </a>
+        </div>
+    @endif
+
     @stack('scripts')
 </body>
 </html>
