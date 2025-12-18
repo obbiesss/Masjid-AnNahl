@@ -43,7 +43,7 @@
 
                 @if($donations->count() > 0)
                     @foreach($donations as $donation)
-                        <div class="col-md-6 mb-4">
+                        <div class="col-lg-6 mx-auto mb-4">
                             <div class="card card-custom h-100">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
@@ -96,7 +96,7 @@
                             <hr class="my-4">
 
                             <h6 class="mb-3">Atau Hubungi Admin</h6>
-                            <a href="https://wa.me/6285891331229" target="_blank" class="btn btn-success">
+                            <a href="https://wa.me/628129793100" target="_blank" class="btn btn-success">
                                 <i class="bi bi-whatsapp"></i> Hubungi via WhatsApp
                             </a>
                         </div>

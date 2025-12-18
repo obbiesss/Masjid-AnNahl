@@ -95,7 +95,7 @@
                                         {{ ucfirst($activity->type) }}
                                     </span>
                                 </div>
-                                <p class="card-text text-muted">{!! Str::limit($activity->description, 100) !!}</p>
+                                <p class="card-text text-muted">{!! Str::limit($activity->description, 200) !!}</p>
                                 <div class="mt-3">
                                     <small class="text-muted d-block">
                                         <i class="bi bi-calendar"></i> {{ $activity->date }}

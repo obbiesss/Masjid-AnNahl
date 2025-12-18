@@ -96,10 +96,7 @@
 
                             <div class="misi-content">
                                 <p class="text-muted mb-0">
-                                    {!! nl2br(e($profile->misi ?? '1. Menyelenggarakan kegiatan keagamaan yang berkualitas
-                        2. Membina generasi muda melalui pendidikan Islam
-                        3. Menjadi pusat kegiatan sosial kemasyarakatan
-                        4. Mengoptimalkan fungsi masjid sebagai rumah Allah')) !!}
+                                    {!! $profile->misi !!}
                                 </p>
                             </div>
                         </div>

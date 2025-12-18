@@ -26,7 +26,7 @@
                         <small class="text-muted">
                             {{ \Carbon\Carbon::parse($item->published_date)->format('d F Y') }}
                         </small>
-                        <p class="card-text mt-2">{{ Str::limit($item->excerpt, 100) }}</p>
+                        <p class="card-text mt-2">{!! Str::limit($item->excerpt, 200) !!}</p>
                         <a href="{{ route('berita.detail', $item->id) }}" class="btn btn-outline-primary btn-sm">
                             Baca Selengkapnya
                         </a>

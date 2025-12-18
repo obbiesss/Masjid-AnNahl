@@ -210,13 +210,13 @@
                     </form>
                     
                     <!-- Demo Credentials Info -->
-                    <div class="alert alert-info mt-4 mb-0">
+                    <!-- div class="alert alert-info mt-4 mb-0">
                         <small>
                             <strong>Demo Login:</strong><br>
                             Email: <code>admin@masjid.com</code><br>
                             Password: <code>password123</code>
                         </small>
-                    </div>
+                    </div -->
                     
                     <!-- Back to Home (Mobile) -->
                     <div class="text-center mt-3 d-lg-none">
